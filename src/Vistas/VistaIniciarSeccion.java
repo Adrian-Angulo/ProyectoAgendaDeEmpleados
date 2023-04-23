@@ -20,6 +20,10 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null); 
         Shape forma = new RoundRectangle2D.Double(0, 0, getBounds().width, getBounds().height, 20, 20);
+        setDefaultCloseOperation(NewJFrame.EXIT_ON_CLOSE);
+        setResizable(false);// redimencionar la ventada
+        setTitle("Agenda Empleados");
+        setIconImage(getToolkit().getDefaultToolkit().getImage("Recursos/icono.png"));
     }
 
     /**
@@ -41,12 +45,12 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jPanel10 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        ingresar_btn = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtcorreo = new javax.swing.JTextField();
-        txtpassword = new javax.swing.JPasswordField();
+        correo_txt = new javax.swing.JTextField();
+        contrasena_txt = new javax.swing.JPasswordField();
         jSeparator5 = new javax.swing.JSeparator();
         jSeparator6 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
@@ -136,17 +140,21 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
 
         jPanel10.setBackground(new java.awt.Color(33, 44, 62));
 
-        jButton1.setBackground(new java.awt.Color(65, 170, 174));
-        jButton1.setFont(new java.awt.Font("Gotham Thin", 0, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("INGRESAR");
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.setHideActionText(true);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setIconTextGap(5);
-        jButton1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Candado.png"))); // NOI18N
+        ingresar_btn.setBackground(new java.awt.Color(65, 170, 174));
+        ingresar_btn.setFont(new java.awt.Font("Gotham Thin", 0, 12)); // NOI18N
+        ingresar_btn.setForeground(new java.awt.Color(255, 255, 255));
+        ingresar_btn.setText("INGRESAR");
+        ingresar_btn.setBorder(null);
+        ingresar_btn.setBorderPainted(false);
+        ingresar_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ingresar_btn.setHideActionText(true);
+        ingresar_btn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        ingresar_btn.setIconTextGap(5);
+        ingresar_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ingresar_btnActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Gotham Thin", 0, 40)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -161,17 +169,17 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("CONTRASEÑA");
 
-        txtcorreo.setBackground(new java.awt.Color(33, 45, 62));
-        txtcorreo.setFont(new java.awt.Font("Gotham Thin", 0, 18)); // NOI18N
-        txtcorreo.setForeground(new java.awt.Color(73, 181, 172));
-        txtcorreo.setBorder(null);
-        txtcorreo.setCaretColor(new java.awt.Color(73, 181, 172));
+        correo_txt.setBackground(new java.awt.Color(33, 45, 62));
+        correo_txt.setFont(new java.awt.Font("Gotham Thin", 0, 18)); // NOI18N
+        correo_txt.setForeground(new java.awt.Color(73, 181, 172));
+        correo_txt.setBorder(null);
+        correo_txt.setCaretColor(new java.awt.Color(73, 181, 172));
 
-        txtpassword.setBackground(new java.awt.Color(33, 45, 62));
-        txtpassword.setFont(txtpassword.getFont().deriveFont(txtpassword.getFont().getSize()+7f));
-        txtpassword.setForeground(new java.awt.Color(73, 181, 172));
-        txtpassword.setBorder(null);
-        txtpassword.setCaretColor(new java.awt.Color(73, 181, 172));
+        contrasena_txt.setBackground(new java.awt.Color(33, 45, 62));
+        contrasena_txt.setFont(contrasena_txt.getFont().deriveFont(contrasena_txt.getFont().getSize()+7f));
+        contrasena_txt.setForeground(new java.awt.Color(73, 181, 172));
+        contrasena_txt.setBorder(null);
+        contrasena_txt.setCaretColor(new java.awt.Color(73, 181, 172));
 
         jSeparator5.setBackground(new java.awt.Color(73, 181, 172));
         jSeparator5.setForeground(new java.awt.Color(73, 181, 172));
@@ -206,7 +214,7 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
                         .addGap(226, 226, 226))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(contrasena_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(47, 47, 47))))
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(60, 60, 60)
@@ -214,7 +222,7 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
                 .addGap(47, 47, 47))
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(120, 120, 120)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ingresar_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(127, 127, 127))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addGap(60, 60, 60)
@@ -224,7 +232,7 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
                         .addGap(262, 262, 262))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addComponent(txtcorreo)))
+                        .addComponent(correo_txt)))
                 .addGap(47, 47, 47))
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
@@ -241,7 +249,7 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(correo_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,12 +258,12 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(contrasena_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel5))
                 .addGap(4, 4, 4)
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ingresar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(91, 91, 91))
         );
 
@@ -265,6 +273,12 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ingresar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresar_btnActionPerformed
+        // TODO add your handling code here:
+        new VistaMenuPrincipal().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_ingresar_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -302,9 +316,11 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField contrasena_txt;
+    private javax.swing.JTextField correo_txt;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton ingresar_btn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -320,7 +336,5 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JTextField txtcorreo;
-    private javax.swing.JPasswordField txtpassword;
     // End of variables declaration//GEN-END:variables
 }
