@@ -12,11 +12,11 @@ import java.awt.geom.RoundRectangle2D;
  * @author Adrian Castillo
  */
 public class VistaIniciarSeccion extends javax.swing.JFrame {
-
+    private static VistaIniciarSeccion iniciarSeccion;
     /**
      * Creates new form VistaIniciarSeccion
      */
-    public VistaIniciarSeccion() {
+    private VistaIniciarSeccion() {
         initComponents();
         setLocationRelativeTo(null); 
         Shape forma = new RoundRectangle2D.Double(0, 0, getBounds().width, getBounds().height, 20, 20);
@@ -24,6 +24,12 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
         setResizable(false);// redimencionar la ventada
         setTitle("Agenda Empleados");
         
+    }
+    public static VistaIniciarSeccion getVista(){
+        if(iniciarSeccion==null){
+            iniciarSeccion = new VistaIniciarSeccion();
+        }
+        return iniciarSeccion;
     }
 
     /**
@@ -276,7 +282,8 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
 
     private void ingresar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresar_btnActionPerformed
         // TODO add your handling code here:
-        new VistaMenuPrincipal().setVisible(true);
+        VistaMenuPrincipal menuP = VistaMenuPrincipal.getMenuPrincipal();
+        menuP.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ingresar_btnActionPerformed
 

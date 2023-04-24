@@ -21,13 +21,18 @@ import javax.swing.table.DefaultTableModel;
  * @author Adrian Castillo
  */
 public class VistaMenuPrincipal extends javax.swing.JFrame {
+    
+    /**
+     * Variable de instancia de tipo static para controlar el singleton
+     */
+    private static VistaMenuPrincipal menuP;
     AgendaDeEmpleados agenda=new AgendaDeEmpleados();
     DefaultTableModel model = new DefaultTableModel();
     ArrayList<Empleado> empleados = new ArrayList<>();
     /**
      * Creates new form VistaMenuPrincipal
      */
-    public VistaMenuPrincipal() {
+    private VistaMenuPrincipal() {
         initComponents();
         
         setLocationRelativeTo(null); 
@@ -37,6 +42,21 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         setTitle("Agenda Empleados");
         
     }
+       /**
+     * @method getMenuPrincipal
+     * metodo singleton que verifica si la instancia esta creada o no
+     * @return instancia
+     * retorna la instancia del aplicativo
+     */
+    
+    public static VistaMenuPrincipal getMenuPrincipal(){
+        if(menuP==null){
+            menuP=new VistaMenuPrincipal();
+        }
+        
+        return menuP;
+    }
+
     
 
     /**
@@ -497,8 +517,9 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
 
     private void regresar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresar_btnActionPerformed
         // TODO add your handling code here:
-        new VistaIniciarSeccion().setVisible(true);
-        this.dispose();
+        VistaIniciarSeccion iniciarSeccion = VistaIniciarSeccion.getVista();
+        iniciarSeccion.setVisible(true);
+        //this.dispose();
     }//GEN-LAST:event_regresar_btnActionPerformed
 
     private void guardar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardar_btnActionPerformed
