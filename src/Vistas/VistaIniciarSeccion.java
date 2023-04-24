@@ -20,10 +20,10 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null); 
         Shape forma = new RoundRectangle2D.Double(0, 0, getBounds().width, getBounds().height, 20, 20);
-        setDefaultCloseOperation(NewJFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(VistaIniciarSeccion.EXIT_ON_CLOSE);
         setResizable(false);// redimencionar la ventada
         setTitle("Agenda Empleados");
-        setIconImage(getToolkit().getDefaultToolkit().getImage("Recursos/icono.png"));
+        
     }
 
     /**

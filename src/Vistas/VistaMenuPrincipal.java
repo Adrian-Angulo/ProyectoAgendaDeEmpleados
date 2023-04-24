@@ -4,27 +4,40 @@
  */
 package Vistas;
 
+
 import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
+import agendadecontactos.AgendaDeEmpleados;
+import agendadecontactos.Empleado;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Adrian Castillo
  */
 public class VistaMenuPrincipal extends javax.swing.JFrame {
-
+    AgendaDeEmpleados agenda=new AgendaDeEmpleados();
+    DefaultTableModel model = new DefaultTableModel();
+    ArrayList<Empleado> empleados = new ArrayList<>();
     /**
      * Creates new form VistaMenuPrincipal
      */
     public VistaMenuPrincipal() {
         initComponents();
+        
         setLocationRelativeTo(null); 
         Shape forma = new RoundRectangle2D.Double(0, 0, getBounds().width, getBounds().height, 20, 20);
-        setDefaultCloseOperation(NewJFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(VistaMenuPrincipal.EXIT_ON_CLOSE);
         setResizable(false);// redimencionar la ventada
         setTitle("Agenda Empleados");
+        
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,7 +57,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         apellido = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        id = new javax.swing.JTextField();
+        id_txt = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         cargo_Combox = new javax.swing.JComboBox<>();
@@ -130,12 +143,12 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(65, 170, 174));
         jLabel8.setText("Id");
 
-        id.setBackground(new java.awt.Color(33, 44, 62));
-        id.setFont(new java.awt.Font("Gotham Thin", 0, 12)); // NOI18N
-        id.setForeground(new java.awt.Color(65, 170, 174));
-        id.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(65, 170, 174)));
-        id.setCaretColor(new java.awt.Color(65, 170, 174));
-        id.setDisabledTextColor(new java.awt.Color(65, 170, 174));
+        id_txt.setBackground(new java.awt.Color(33, 44, 62));
+        id_txt.setFont(new java.awt.Font("Gotham Thin", 0, 12)); // NOI18N
+        id_txt.setForeground(new java.awt.Color(65, 170, 174));
+        id_txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(65, 170, 174)));
+        id_txt.setCaretColor(new java.awt.Color(65, 170, 174));
+        id_txt.setDisabledTextColor(new java.awt.Color(65, 170, 174));
 
         jLabel9.setFont(new java.awt.Font("Gotham Thin", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(65, 170, 174));
@@ -167,9 +180,16 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         guardar_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         guardar_btn.setFocusable(false);
         guardar_btn.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Guardar.png"))); // NOI18N
+        guardar_btn.setRequestFocusEnabled(false);
+        guardar_btn.setRolloverEnabled(false);
         guardar_btn.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Guardar2.png"))); // NOI18N
         guardar_btn.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Guardar2.png"))); // NOI18N
         guardar_btn.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Guardar2.png"))); // NOI18N
+        guardar_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                guardar_btnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -196,7 +216,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
                                 .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(salario_Spinner, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(id)
+                            .addComponent(id_txt)
                             .addComponent(apellido)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -217,16 +237,17 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(id))
+                    .addComponent(id_txt))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cargo_Combox)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(salario_Spinner)
                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jLabel9))
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cargo_Combox)
+                        .addComponent(jLabel9)))
                 .addGap(18, 18, 18)
                 .addComponent(guardar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38))
@@ -394,15 +415,22 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Id", "Nombre", "Apellido", "Salario", "Cargo"
+                "Nombre", "Apellido", "Id", "Salario", "Cargo"
             }
-        ));
-        tabla.setColumnSelectionAllowed(true);
-        tabla.setEnabled(false);
-        tabla.setFocusable(false);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Long.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tabla.setCellSelectionEnabled(false);
         tabla.setGridColor(new java.awt.Color(33, 44, 62));
+        tabla.setRowSelectionAllowed(true);
         tabla.setSelectionForeground(new java.awt.Color(65, 170, 174));
-        tabla.setShowGrid(true);
+        tabla.setShowGrid(false);
         jScrollPane1.setViewportView(tabla);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -422,10 +450,8 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 697, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -461,6 +487,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
 
     private void borrar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrar_btnActionPerformed
         // TODO add your handling code here:
+        eliminarfila();
     }//GEN-LAST:event_borrar_btnActionPerformed
 
     private void buscar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar_btnActionPerformed
@@ -472,6 +499,63 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         new VistaIniciarSeccion().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_regresar_btnActionPerformed
+
+    private void guardar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardar_btnActionPerformed
+        // TODO add your handling code here:
+        //imprimir empleados en una Jlist
+        cargaAutomatica();
+       
+    }//GEN-LAST:event_guardar_btnActionPerformed
+    public void cargaAutomatica(){
+         // Crear una lista de empleados
+        
+        //String nombre = this.nombre.getText();
+        //String apellido = this.apellido.getText();
+        //String id = this.id_txt.getText();
+        //String salario = (String) salario_Spinner.getValue();
+        //String cargo = (String) cargo_Combox.getSelectedItem();
+        //empleados.add(new Empleado(nombre, apellido, id, salario, cargo));
+        empleados.add(new Empleado(nombre.getText(), apellido.getText(), id_txt.getText(), (long) salario_Spinner.getValue(), (String) cargo_Combox.getSelectedItem()));
+        
+        // Crear el modelo de tabla con los nombres de las columnas
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Nombre");
+        model.addColumn("Apellido");
+        model.addColumn("ID");
+        model.addColumn("Salario");
+        model.addColumn("Cargo");
+
+        // Agregar los datos de los empleados al modelo de tabla
+        for (Empleado empleado : empleados) {
+            Object[] row = new Object[5];
+            row[0] = empleado.getNombre();
+            row[1] = empleado.getApellido();
+            row[2] = empleado.getId();
+            row[3] = empleado.getSalario();
+            row[4] = empleado.getCargo();
+            model.addRow(row);
+        }
+        tabla.setModel(model);
+    }
+    public void eliminarfila(){
+         // Obtener la fila seleccionada por el usuario
+        int selectedRow = tabla.getSelectedRow();
+        System.out.println(selectedRow);
+        model.removeRow(selectedRow);   
+        // Verificar que se haya seleccionado una fila
+        if (selectedRow != -1) {
+            // Obtener los valores de la fila seleccionada
+            
+            //String nombre = (String) model.getValueAt(selectedRow, 0);
+            //String apellido = (String) model.getValueAt(selectedRow, 1);
+            //String id = (String) model.getValueAt(selectedRow, 2);
+            
+            //model.removeRow(selectedRow);    
+        }
+        else{
+            System.out.println("kgkjhgjhgjhgjkhgjhgk");
+        }
+    }
     
     /**
      * @param args the command line arguments
@@ -515,7 +599,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField buscar_txt;
     private javax.swing.JComboBox<String> cargo_Combox;
     private javax.swing.JButton guardar_btn;
-    private javax.swing.JTextField id;
+    private javax.swing.JTextField id_txt;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

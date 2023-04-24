@@ -4,17 +4,50 @@
  */
 package Vistas;
 
+import agendadecontactos.Empleado;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Adrian Castillo
  */
 public class NewJFrame extends javax.swing.JFrame {
+    DefaultTableModel modelo = new DefaultTableModel();
+    public void cargaAutomatica(){
+         // Crear una lista de empleados
+        ArrayList<Empleado> empleados = new ArrayList<>();
+        empleados.add(new Empleado("Juan", "Perez", "f", "sa", "Gerente"));
+        
 
+        // Crear el modelo de tabla con los nombres de las columnas
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Nombre");
+        model.addColumn("Apellido");
+        model.addColumn("ID");
+        model.addColumn("Salario");
+        model.addColumn("Cargo");
+
+        // Agregar los datos de los empleados al modelo de tabla
+        for (Empleado empleado : empleados) {
+            Object[] row = new Object[5];
+            row[0] = empleado.getNombre();
+            row[1] = empleado.getApellido();
+            row[2] = empleado.getId();
+            row[3] = empleado.getSalario();
+            row[4] = empleado.getCargo();
+            model.addRow(row);
+        }
+        jTable1.setModel(model);
+    }
+       
     /**
      * Creates new form NewJFrame
      */
     public NewJFrame() {
         initComponents();
+        cargaAutomatica();
     }
 
     /**
@@ -33,15 +66,23 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre", "Apellido", "Id", "Salario", "cargo"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -51,14 +92,13 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 29, Short.MAX_VALUE))
         );
 
         pack();
