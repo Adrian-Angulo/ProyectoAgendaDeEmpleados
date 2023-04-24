@@ -487,11 +487,12 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
 
     private void borrar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrar_btnActionPerformed
         // TODO add your handling code here:
-        eliminarfila();
+        eliminarFilaSeleccionada(tabla);
     }//GEN-LAST:event_borrar_btnActionPerformed
 
     private void buscar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar_btnActionPerformed
         // TODO add your handling code here:
+        buscarFilaPorCampo(tabla, "ID", buscar_txt.getText());
     }//GEN-LAST:event_buscar_btnActionPerformed
 
     private void regresar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresar_btnActionPerformed
@@ -504,6 +505,9 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         //imprimir empleados en una Jlist
         cargaAutomatica();
+        nombre.setText("");
+        apellido.setText("");
+        id_txt.setText("");
        
     }//GEN-LAST:event_guardar_btnActionPerformed
     public void cargaAutomatica(){
@@ -537,24 +541,49 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         }
         tabla.setModel(model);
     }
-    public void eliminarfila(){
-         // Obtener la fila seleccionada por el usuario
-        int selectedRow = tabla.getSelectedRow();
-        System.out.println(selectedRow);
-        model.removeRow(selectedRow);   
+     public void eliminarFilaSeleccionada(JTable tabla) {
+        // Obtener el modelo de datos de la tabla
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+        
+        // Obtener el índice de la fila seleccionada
+        int filaSeleccionada = tabla.getSelectedRow();
+        
         // Verificar que se haya seleccionado una fila
-        if (selectedRow != -1) {
-            // Obtener los valores de la fila seleccionada
-            
-            //String nombre = (String) model.getValueAt(selectedRow, 0);
-            //String apellido = (String) model.getValueAt(selectedRow, 1);
-            //String id = (String) model.getValueAt(selectedRow, 2);
-            
-            //model.removeRow(selectedRow);    
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(tabla, "Por favor, seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        else{
-            System.out.println("kgkjhgjhgjhgjkhgjhgk");
+        
+        // Mostrar un mensaje de confirmación antes de eliminar la fila
+        int confirmacion = JOptionPane.showConfirmDialog(tabla, "¿Está seguro de que desea eliminar la fila seleccionada?", "Confirmación", JOptionPane.YES_NO_OPTION);
+        if (confirmacion != JOptionPane.YES_OPTION) {
+            return;
         }
+        
+        // Eliminar la fila seleccionada del modelo de datos de la tabla
+        modelo.removeRow(filaSeleccionada);
+    }
+     public static void buscarFilaPorCampo(JTable tabla, String campo, String valor) {
+        // Obtener el modelo de datos de la tabla
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+        
+        // Buscar la fila que contiene el valor especificado en el campo indicado
+        int fila = -1;
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            if (modelo.getValueAt(i, modelo.findColumn(campo)).equals(valor)) {
+                fila = i;
+                break;
+            }
+        }
+        
+        // Verificar si se encontró la fila
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(tabla, "No se encontró ninguna fila que contenga el valor especificado.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Seleccionar la fila encontrada
+        tabla.setRowSelectionInterval(fila, fila);
     }
     
     /**

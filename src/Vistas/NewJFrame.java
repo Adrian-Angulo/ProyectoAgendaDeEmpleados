@@ -7,6 +7,8 @@ package Vistas;
 import agendadecontactos.Empleado;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,8 +20,8 @@ public class NewJFrame extends javax.swing.JFrame {
     public void cargaAutomatica(){
          // Crear una lista de empleados
         ArrayList<Empleado> empleados = new ArrayList<>();
-        empleados.add(new Empleado("Juan", "Perez", "f", "sa", "Gerente"));
-        
+        empleados.add(new Empleado("Juan", "Perez", "f", 11, "Gerente"));
+        empleados.add(new Empleado("Adrian", "Perez", "1223321", 11, "Gadfsd"));
 
         // Crear el modelo de tabla con los nombres de las columnas
         DefaultTableModel model = new DefaultTableModel();
@@ -41,6 +43,53 @@ public class NewJFrame extends javax.swing.JFrame {
         }
         jTable1.setModel(model);
     }
+    
+    public void eliminarFilaSeleccionada(JTable tabla) {
+        // Obtener el modelo de datos de la tabla
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+        
+        // Obtener el índice de la fila seleccionada
+        int filaSeleccionada = tabla.getSelectedRow();
+        
+        // Verificar que se haya seleccionado una fila
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(tabla, "Por favor, seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Mostrar un mensaje de confirmación antes de eliminar la fila
+        int confirmacion = JOptionPane.showConfirmDialog(tabla, "¿Está seguro de que desea eliminar la fila seleccionada?", "Confirmación", JOptionPane.YES_NO_OPTION);
+        if (confirmacion != JOptionPane.YES_OPTION) {
+            return;
+        }
+        
+        // Eliminar la fila seleccionada del modelo de datos de la tabla
+        modelo.removeRow(filaSeleccionada);
+    }
+    
+    public static void buscarFilaPorCampo(JTable tabla, String campo, String valor) {
+        // Obtener el modelo de datos de la tabla
+        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+        
+        // Buscar la fila que contiene el valor especificado en el campo indicado
+        int fila = -1;
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            if (modelo.getValueAt(i, modelo.findColumn(campo)).equals(valor)) {
+                fila = i;
+                break;
+            }
+        }
+        
+        // Verificar si se encontró la fila
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(tabla, "No se encontró ninguna fila que contenga el valor especificado.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Seleccionar la fila encontrada
+        tabla.setRowSelectionInterval(fila, fila);
+    }
+
        
     /**
      * Creates new form NewJFrame
@@ -48,6 +97,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         cargaAutomatica();
+        
     }
 
     /**
@@ -61,6 +111,9 @@ public class NewJFrame extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        btn_eliminar = new javax.swing.JButton();
+        buscar = new javax.swing.JButton();
+        txt_bucar = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,24 +138,63 @@ public class NewJFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        btn_eliminar.setText("aliminar");
+        btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliminarActionPerformed(evt);
+            }
+        });
+
+        buscar.setText("jButton1");
+        buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_eliminar)
+                .addGap(83, 83, 83))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(buscar)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_bucar)))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 29, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(btn_eliminar)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buscar)
+                    .addComponent(txt_bucar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
+        // TODO add your handling code here:
+        eliminarFilaSeleccionada(jTable1);
+    }//GEN-LAST:event_btn_eliminarActionPerformed
+
+    private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
+        // TODO add your handling code here:
+        buscarFilaPorCampo(jTable1, "Nombre", txt_bucar.getText());
+    }//GEN-LAST:event_buscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -140,7 +232,10 @@ public class NewJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_eliminar;
+    private javax.swing.JButton buscar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txt_bucar;
     // End of variables declaration//GEN-END:variables
 }
