@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 import agendadecontactos.AgendaDeEmpleados;
+import agendadecontactos.Controlador;
 import agendadecontactos.Empleado;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -26,9 +27,10 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
      * Variable de instancia de tipo static para controlar el singleton
      */
     private static VistaMenuPrincipal menuP;
+    private DAO.DAOEmpleados dAOEmpleados = Controlador.getControlador();
     AgendaDeEmpleados agenda=new AgendaDeEmpleados();
     DefaultTableModel model = new DefaultTableModel();
-    ArrayList<Empleado> empleados = new ArrayList<>();
+   
     /**
      * Creates new form VistaMenuPrincipal
      */
@@ -507,105 +509,36 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
 
     private void borrar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrar_btnActionPerformed
         // TODO add your handling code here:
-        eliminarFilaSeleccionada(tabla);
+        dAOEmpleados.eliminarFilaSeleccionada(tabla);
     }//GEN-LAST:event_borrar_btnActionPerformed
 
     private void buscar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar_btnActionPerformed
         // TODO add your handling code here:
-        buscarFilaPorCampo(tabla, "ID", buscar_txt.getText());
+        
+        dAOEmpleados.buscarFilaPorCampo(tabla, "ID", buscar_txt.getText());
     }//GEN-LAST:event_buscar_btnActionPerformed
 
     private void regresar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresar_btnActionPerformed
         // TODO add your handling code here:
         VistaIniciarSeccion iniciarSeccion = VistaIniciarSeccion.getVista();
         iniciarSeccion.setVisible(true);
-        //this.dispose();
+        this.dispose();
     }//GEN-LAST:event_regresar_btnActionPerformed
 
     private void guardar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardar_btnActionPerformed
         // TODO add your handling code here:
-        //imprimir empleados en una Jlist
-        cargaAutomatica();
+        
+        String nombre1 = this.nombre.getText();
+        String apellido1 = this.apellido.getText();
+        String id1 = this.id_txt.getText();
+        Long salario1 = (long) salario_Spinner.getValue();
+        String cargo1 = (String) cargo_Combox.getSelectedItem();
+        dAOEmpleados.cargaAutomatica(nombre1, apellido1, id1, salario1, cargo1, tabla);
         nombre.setText("");
         apellido.setText("");
         id_txt.setText("");
-       
+        
     }//GEN-LAST:event_guardar_btnActionPerformed
-    public void cargaAutomatica(){
-         // Crear una lista de empleados
-        
-        //String nombre = this.nombre.getText();
-        //String apellido = this.apellido.getText();
-        //String id = this.id_txt.getText();
-        //String salario = (String) salario_Spinner.getValue();
-        //String cargo = (String) cargo_Combox.getSelectedItem();
-        //empleados.add(new Empleado(nombre, apellido, id, salario, cargo));
-        empleados.add(new Empleado(nombre.getText(), apellido.getText(), id_txt.getText(), (long) salario_Spinner.getValue(), (String) cargo_Combox.getSelectedItem()));
-        
-        // Crear el modelo de tabla con los nombres de las columnas
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Nombre");
-        model.addColumn("Apellido");
-        model.addColumn("ID");
-        model.addColumn("Salario");
-        model.addColumn("Cargo");
-
-        // Agregar los datos de los empleados al modelo de tabla
-        for (Empleado empleado : empleados) {
-            Object[] row = new Object[5];
-            row[0] = empleado.getNombre();
-            row[1] = empleado.getApellido();
-            row[2] = empleado.getId();
-            row[3] = empleado.getSalario();
-            row[4] = empleado.getCargo();
-            model.addRow(row);
-        }
-        tabla.setModel(model);
-    }
-     public void eliminarFilaSeleccionada(JTable tabla) {
-        // Obtener el modelo de datos de la tabla
-        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-        
-        // Obtener el índice de la fila seleccionada
-        int filaSeleccionada = tabla.getSelectedRow();
-        
-        // Verificar que se haya seleccionado una fila
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(tabla, "Por favor, seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        // Mostrar un mensaje de confirmación antes de eliminar la fila
-        int confirmacion = JOptionPane.showConfirmDialog(tabla, "¿Está seguro de que desea eliminar la fila seleccionada?", "Confirmación", JOptionPane.YES_NO_OPTION);
-        if (confirmacion != JOptionPane.YES_OPTION) {
-            return;
-        }
-        
-        // Eliminar la fila seleccionada del modelo de datos de la tabla
-        modelo.removeRow(filaSeleccionada);
-    }
-     public static void buscarFilaPorCampo(JTable tabla, String campo, String valor) {
-        // Obtener el modelo de datos de la tabla
-        DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-        
-        // Buscar la fila que contiene el valor especificado en el campo indicado
-        int fila = -1;
-        for (int i = 0; i < modelo.getRowCount(); i++) {
-            if (modelo.getValueAt(i, modelo.findColumn(campo)).equals(valor)) {
-                fila = i;
-                break;
-            }
-        }
-        
-        // Verificar si se encontró la fila
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(tabla, "No se encontró ninguna fila que contenga el valor especificado.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        // Seleccionar la fila encontrada
-        tabla.setRowSelectionInterval(fila, fila);
-    }
     
     /**
      * @param args the command line arguments
