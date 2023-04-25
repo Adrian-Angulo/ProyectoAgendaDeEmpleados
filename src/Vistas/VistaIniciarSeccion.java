@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  *
  * @author Adrian Castillo
  */
-public class VistaIniciarSeccion extends javax.swing.JFrame {
+public class VistaIniciarSeccion extends javax.swing.JFrame{
     private static VistaIniciarSeccion iniciarSeccion;
     private DAO.DAOEmpleados dAOEmpleados = Controlador.getControlador();
     /**

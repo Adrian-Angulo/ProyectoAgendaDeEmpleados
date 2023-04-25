@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package agendadecontactos;
+//importar librerias
 import DAO.DAOEmpleados;
 import java.util.ArrayList;
 import javax.swing.JTable;
@@ -26,7 +27,8 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
- *
+ * clase que se encarga de todo el funcionamiento del programa
+ * Version 1.0
  * @author Adrian Castillo
  */
 public class Controlador implements  DAOEmpleados{
@@ -48,8 +50,8 @@ public class Controlador implements  DAOEmpleados{
     }
     
     /**
-     *
-     * @return
+     * este metodo es para instanciar la clase y que no consuma memoria
+     * @return controlador
      */
     public static Controlador getControlador(){
         if(controlador==null){
@@ -59,7 +61,7 @@ public class Controlador implements  DAOEmpleados{
     }
 
     /**
-     *
+     * Este metodo se encarga de eliminar la fila seleccionadad por el interfaz
      * @param tabla
      */
     @Override
@@ -73,13 +75,13 @@ public class Controlador implements  DAOEmpleados{
         // Verificar que se haya seleccionado una fila
         if (filaSeleccionada == -1) {
             JOptionPane.showMessageDialog(tabla, "Por favor, seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+            
         }
         
         // Mostrar un mensaje de confirmación antes de eliminar la fila
         int confirmacion = JOptionPane.showConfirmDialog(tabla, "¿Está seguro de que desea eliminar la fila seleccionada?", "Confirmación", JOptionPane.YES_NO_OPTION);
         if (confirmacion != JOptionPane.YES_OPTION) {
-            return;
+            
         }
         
         // Eliminar la fila seleccionada del modelo de datos de la tabla

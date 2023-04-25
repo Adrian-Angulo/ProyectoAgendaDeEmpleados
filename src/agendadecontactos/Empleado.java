@@ -15,9 +15,7 @@ public class Empleado {
     private long salario;
     private String cargo;
 
-    /**
-     *
-     */
+    
     public Empleado() {
     }
 
@@ -39,7 +37,7 @@ public class Empleado {
 
     /**
      *
-     * @return
+     * @return nombre
      */
     public String getNombre() {
         return nombre;
