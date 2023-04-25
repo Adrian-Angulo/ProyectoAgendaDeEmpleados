@@ -4,8 +4,10 @@
  */
 package Vistas;
 
+import agendadecontactos.Controlador;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,6 +15,7 @@ import java.awt.geom.RoundRectangle2D;
  */
 public class VistaIniciarSeccion extends javax.swing.JFrame {
     private static VistaIniciarSeccion iniciarSeccion;
+    private DAO.DAOEmpleados dAOEmpleados = Controlador.getControlador();
     /**
      * Creates new form VistaIniciarSeccion
      */
@@ -24,7 +27,13 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
         setResizable(false);// redimencionar la ventada
         setTitle("Agenda Empleados");
         
+        
     }
+
+    /**
+     *
+     * @return
+     */
     public static VistaIniciarSeccion getVista(){
         if(iniciarSeccion==null){
             iniciarSeccion = new VistaIniciarSeccion();
@@ -55,7 +64,7 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        correo_txt = new javax.swing.JTextField();
+        usuario_txt = new javax.swing.JTextField();
         contrasena_txt = new javax.swing.JPasswordField();
         jSeparator5 = new javax.swing.JSeparator();
         jSeparator6 = new javax.swing.JSeparator();
@@ -175,11 +184,11 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("CONTRASEÑA");
 
-        correo_txt.setBackground(new java.awt.Color(33, 45, 62));
-        correo_txt.setFont(new java.awt.Font("Gotham Thin", 0, 18)); // NOI18N
-        correo_txt.setForeground(new java.awt.Color(73, 181, 172));
-        correo_txt.setBorder(null);
-        correo_txt.setCaretColor(new java.awt.Color(73, 181, 172));
+        usuario_txt.setBackground(new java.awt.Color(33, 45, 62));
+        usuario_txt.setFont(new java.awt.Font("Gotham Thin", 0, 18)); // NOI18N
+        usuario_txt.setForeground(new java.awt.Color(73, 181, 172));
+        usuario_txt.setBorder(null);
+        usuario_txt.setCaretColor(new java.awt.Color(73, 181, 172));
 
         contrasena_txt.setBackground(new java.awt.Color(33, 45, 62));
         contrasena_txt.setFont(contrasena_txt.getFont().deriveFont(contrasena_txt.getFont().getSize()+7f));
@@ -238,7 +247,7 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
                         .addGap(262, 262, 262))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addComponent(correo_txt)))
+                        .addComponent(usuario_txt)))
                 .addGap(47, 47, 47))
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
@@ -255,7 +264,7 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(correo_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(usuario_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,9 +291,19 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
 
     private void ingresar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresar_btnActionPerformed
         // TODO add your handling code here:
-        VistaMenuPrincipal menuP = VistaMenuPrincipal.getMenuPrincipal();
-        menuP.setVisible(true);
-        this.dispose();
+        
+        
+        String usuario = usuario_txt.getText();
+        String contrasena = new String(contrasena_txt.getPassword());
+        // Verificamos si el usuario y contraseña son válidos
+        if (dAOEmpleados.VerificarUsuarios(usuario,contrasena)) {
+            VistaMenuPrincipal menuP = VistaMenuPrincipal.getMenuPrincipal();
+            menuP.setVisible(true);
+            this.dispose();
+            JOptionPane.showMessageDialog(this.contrasena_txt, "has iniciado seccion");
+        } else {
+            JOptionPane.showMessageDialog(this.contrasena_txt, "usuario y/o contraseña incorrectos!");
+        }
     }//GEN-LAST:event_ingresar_btnActionPerformed
 
     /**
@@ -324,7 +343,6 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPasswordField contrasena_txt;
-    private javax.swing.JTextField correo_txt;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.JButton ingresar_btn;
@@ -343,5 +361,6 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JTextField usuario_txt;
     // End of variables declaration//GEN-END:variables
 }

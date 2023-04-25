@@ -8,7 +8,6 @@ package Vistas;
 import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
-import agendadecontactos.AgendaDeEmpleados;
 import agendadecontactos.Controlador;
 import agendadecontactos.Empleado;
 import java.util.ArrayList;
@@ -28,8 +27,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
      */
     private static VistaMenuPrincipal menuP;
     private DAO.DAOEmpleados dAOEmpleados = Controlador.getControlador();
-    AgendaDeEmpleados agenda=new AgendaDeEmpleados();
-    DefaultTableModel model = new DefaultTableModel();
+    
    
     /**
      * Creates new form VistaMenuPrincipal

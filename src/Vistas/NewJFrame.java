@@ -17,6 +17,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class NewJFrame extends javax.swing.JFrame {
     DefaultTableModel modelo = new DefaultTableModel();
+
+    /**
+     *
+     */
     public void cargaAutomatica(){
          // Crear una lista de empleados
         ArrayList<Empleado> empleados = new ArrayList<>();
@@ -44,6 +48,10 @@ public class NewJFrame extends javax.swing.JFrame {
         jTable1.setModel(model);
     }
     
+    /**
+     *
+     * @param tabla
+     */
     public void eliminarFilaSeleccionada(JTable tabla) {
         // Obtener el modelo de datos de la tabla
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
@@ -67,6 +75,12 @@ public class NewJFrame extends javax.swing.JFrame {
         modelo.removeRow(filaSeleccionada);
     }
     
+    /**
+     *
+     * @param tabla
+     * @param campo
+     * @param valor
+     */
     public static void buscarFilaPorCampo(JTable tabla, String campo, String valor) {
         // Obtener el modelo de datos de la tabla
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
