@@ -93,10 +93,6 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,6 +103,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(33, 44, 62));
         jPanel7.setPreferredSize(new java.awt.Dimension(100, 106));
 
+        regresar_btn.setBackground(new java.awt.Color(33, 44, 62));
         regresar_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/retroceder.png"))); // NOI18N
         regresar_btn.setBorderPainted(false);
         regresar_btn.setContentAreaFilled(false);
@@ -143,7 +140,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
 
         nombre.setBackground(new java.awt.Color(33, 44, 62));
         nombre.setFont(new java.awt.Font("Gotham Thin", 0, 12)); // NOI18N
-        nombre.setForeground(new java.awt.Color(65, 170, 174));
+        nombre.setForeground(new java.awt.Color(255, 255, 255));
         nombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(65, 170, 174)));
         nombre.setCaretColor(new java.awt.Color(65, 170, 174));
         nombre.setDisabledTextColor(new java.awt.Color(65, 170, 174));
@@ -154,7 +151,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
 
         apellido.setBackground(new java.awt.Color(33, 44, 62));
         apellido.setFont(new java.awt.Font("Gotham Thin", 0, 12)); // NOI18N
-        apellido.setForeground(new java.awt.Color(65, 170, 174));
+        apellido.setForeground(new java.awt.Color(255, 255, 255));
         apellido.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(65, 170, 174)));
         apellido.setCaretColor(new java.awt.Color(65, 170, 174));
         apellido.setDisabledTextColor(new java.awt.Color(65, 170, 174));
@@ -165,7 +162,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
 
         id_txt.setBackground(new java.awt.Color(33, 44, 62));
         id_txt.setFont(new java.awt.Font("Gotham Thin", 0, 12)); // NOI18N
-        id_txt.setForeground(new java.awt.Color(65, 170, 174));
+        id_txt.setForeground(new java.awt.Color(255, 255, 255));
         id_txt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(65, 170, 174)));
         id_txt.setCaretColor(new java.awt.Color(65, 170, 174));
         id_txt.setDisabledTextColor(new java.awt.Color(65, 170, 174));
@@ -201,7 +198,6 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         guardar_btn.setFocusable(false);
         guardar_btn.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Guardar.png"))); // NOI18N
         guardar_btn.setRequestFocusEnabled(false);
-        guardar_btn.setRolloverEnabled(false);
         guardar_btn.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Guardar2.png"))); // NOI18N
         guardar_btn.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Guardar2.png"))); // NOI18N
         guardar_btn.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Guardar2.png"))); // NOI18N
@@ -378,9 +374,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
 
         jScrollPane1.setForeground(new java.awt.Color(65, 170, 174));
 
-        tabla.setBackground(new java.awt.Color(65, 170, 174));
-        tabla.setFont(new java.awt.Font("Gotham Thin", 1, 12)); // NOI18N
-        tabla.setForeground(new java.awt.Color(33, 44, 62));
+        tabla.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -447,10 +441,11 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
             }
         });
         tabla.setCellSelectionEnabled(false);
-        tabla.setGridColor(new java.awt.Color(33, 44, 62));
+        tabla.setGridColor(new java.awt.Color(0, 0, 0));
         tabla.setRowSelectionAllowed(true);
-        tabla.setSelectionForeground(new java.awt.Color(65, 170, 174));
-        tabla.setShowGrid(false);
+        tabla.setSelectionBackground(new java.awt.Color(65, 170, 174));
+        tabla.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        tabla.setShowGrid(true);
         jScrollPane1.setViewportView(tabla);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -463,7 +458,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -482,25 +477,6 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel6, java.awt.BorderLayout.CENTER);
-
-        jMenuBar1.setBackground(new java.awt.Color(65, 170, 174));
-        jMenuBar1.setForeground(new java.awt.Color(65, 170, 174));
-
-        jMenu2.setBackground(new java.awt.Color(65, 170, 174));
-        jMenu2.setBorder(null);
-        jMenu2.setText("File");
-
-        jMenuItem1.setText("Regresar");
-        jMenu2.add(jMenuItem1);
-
-        jMenuBar1.add(jMenu2);
-
-        jMenu5.setBackground(new java.awt.Color(65, 170, 174));
-        jMenu5.setBorder(null);
-        jMenu5.setText("Edit");
-        jMenuBar1.add(jMenu5);
-
-        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -556,10 +532,6 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
