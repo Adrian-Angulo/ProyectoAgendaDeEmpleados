@@ -10,6 +10,11 @@ import java.awt.Shape;
 import java.awt.geom.RoundRectangle2D;
 import agendadecontactos.Controlador;
 import agendadecontactos.Empleado;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -21,7 +26,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Adrian Castillo
  */
 public class VistaMenuPrincipal extends javax.swing.JFrame {
-    
+    ArrayList<Empleado> empleados = new ArrayList<Empleado>();
+    DefaultTableModel model = new DefaultTableModel();
     /**
      * Variable de instancia de tipo static para controlar el singleton
      */
@@ -34,7 +40,11 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
      */
     private VistaMenuPrincipal() {
         initComponents();
-        
+        model.addColumn("Nombre");
+        model.addColumn("Apellido");
+        model.addColumn("ID");
+        model.addColumn("Salario");
+        model.addColumn("Cargo");
         setLocationRelativeTo(null); 
         Shape forma = new RoundRectangle2D.Double(0, 0, getBounds().width, getBounds().height, 20, 20);
         setDefaultCloseOperation(VistaMenuPrincipal.EXIT_ON_CLOSE);
@@ -52,6 +62,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
     public static VistaMenuPrincipal getMenuPrincipal(){
         if(menuP==null){
             menuP=new VistaMenuPrincipal();
+            
         }
         
         return menuP;
@@ -483,7 +494,7 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
 
     private void borrar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrar_btnActionPerformed
         // TODO add your handling code here:
-        dAOEmpleados.eliminarFilaSeleccionada(tabla);
+        dAOEmpleados.eliminarFilaSeleccionada(tabla, empleados);
     }//GEN-LAST:event_borrar_btnActionPerformed
 
     private void buscar_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscar_btnActionPerformed
@@ -507,13 +518,82 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
         String id1 = this.id_txt.getText();
         Long salario1 = (long) salario_Spinner.getValue();
         String cargo1 = (String) cargo_Combox.getSelectedItem();
-        dAOEmpleados.cargaAutomatica(nombre1, apellido1, id1, salario1, cargo1, tabla);
+        cargaAutomatica(nombre1, apellido1, id1, salario1, cargo1,empleados);
+        guardarDatos();
         nombre.setText("");
         apellido.setText("");
         id_txt.setText("");
         
     }//GEN-LAST:event_guardar_btnActionPerformed
+    public void guardarDatos() {
+         try {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("Datos.txt"));
+
+        // Escribir encabezados de columnas
+        for (int i = 0; i < tabla.getColumnCount(); i++) {
+            writer.write(tabla.getColumnName(i) + "\t");
+        }
+        writer.newLine();
+
+        // Escribir datos de la tabla
+        for (int row = 0; row < tabla.getRowCount(); row++) {
+            for (int col = 0; col < tabla.getColumnCount(); col++) {
+                writer.write(tabla.getValueAt(row, col).toString() + "\t");
+            }
+            writer.newLine();
+        }
+
+        writer.close();
+        System.out.println("Los datos se han guardado en el archivo: Datos.txt");
+
+    } catch (IOException e) {
+        System.err.println("Error al escribir en el archivo: " + e.getMessage());
+    }
+    }
+    public void cargarDatos() {
+//        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("Datos.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split("\t");
+               model.addRow(data);
+            }
+            tabla.setModel(model);
+            System.out.println("Los datos se han cargado desde el archivo: " + "Datos.txt");
+            
+        } catch (IOException e) {
+            System.err.println("Error al leer el archivo: " + e.getMessage());
+        }
+    }
     
+    public void addRow(JTable table, String[] rowData) {
+//        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        model.addRow(rowData);
+    }
+    public void cargaAutomatica(String nombre, String apellido, String id, Long salario, String cargo, ArrayList<Empleado> empleados) {
+     // Crear una lista de empleados
+
+    empleados.add(new Empleado(nombre, apellido, id,salario, cargo));
+
+    // Crear el modelo de tabla con los nombres de las columnas
+    
+   
+
+    // Agregar los datos de los empleados al modelo de tabla
+    for (Empleado empleado : empleados) {
+        Object[] row = new Object[5];
+        row[0] = empleado.getNombre();
+        row[1] = empleado.getApellido();
+        row[2] = empleado.getId();
+        row[3] = empleado.getSalario();
+        row[4] = empleado.getCargo();
+        model.addRow(row);
+    }
+    tabla.setModel(model);       
+   }
+
     /**
      * @param args the command line arguments
      */

@@ -5,8 +5,10 @@
 package DAO;
 
 import agendadecontactos.Empleado;
+import java.util.ArrayList;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,13 +25,13 @@ public interface DAOEmpleados {
      * @param cargo
      * @param tabla
      */
-    public void cargaAutomatica(String nombre, String apellido, String id,Long salario, String cargo, JTable tabla);
+    public void cargaAutomatica(String nombre, String apellido, String id,Long salario, String cargo, JTable tabla, ArrayList<Empleado> empleados);
 
     /**
      *
      * @param tabla
      */
-    public void eliminarFilaSeleccionada(JTable tabla);
+    public void eliminarFilaSeleccionada(JTable tabla,ArrayList<Empleado> empleados);
 
     /**
      *

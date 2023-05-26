@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 public class VistaIniciarSeccion extends javax.swing.JFrame {
     private static VistaIniciarSeccion iniciarSeccion;
     private DAO.DAOEmpleados dAOEmpleados = Controlador.getControlador();
+    VistaMenuPrincipal munuPrin = VistaMenuPrincipal.getMenuPrincipal();
     /**
      * Creates new form VistaIniciarSeccion
      */
@@ -299,9 +300,11 @@ public class VistaIniciarSeccion extends javax.swing.JFrame {
         if (dAOEmpleados.VerificarUsuarios(usuario,contrasena)) {
             VistaMenuPrincipal menuP = VistaMenuPrincipal.getMenuPrincipal();
             menuP.setVisible(true);
+            menuP.cargarDatos();
             this.dispose();
             usuario_txt.setText("");
             contrasena_txt.setText("");
+            
             JOptionPane.showMessageDialog(this.contrasena_txt, "has iniciado seccion");
         } else {
             JOptionPane.showMessageDialog(this.contrasena_txt, "usuario y/o contraseña incorrectos!");

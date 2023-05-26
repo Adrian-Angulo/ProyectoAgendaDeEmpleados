@@ -1,0 +1,8 @@
+Nombre	Apellido	ID	Salario	Cargo	
+Nombre	Apellido	ID	Salario	Cargo	
+g			1100000	Administrador	
+g			1100000	Administrador	
+x			1100000	Administrador	
+c			1100000	Administrador	
+c			1100000	Administrador	
+d			1100000	Administrador	

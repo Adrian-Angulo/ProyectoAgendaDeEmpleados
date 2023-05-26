@@ -7,6 +7,9 @@ import DAO.DAOEmpleados;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import Vistas.VistaMenuPrincipal;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
@@ -33,8 +36,8 @@ public class Controlador implements  DAOEmpleados{
     private static Controlador controlador;
     private String usuario;
     private String contrasenia;
-    ArrayList<Empleado> empleados = new ArrayList<Empleado>();
-    DefaultTableModel model = new DefaultTableModel();
+    
+    
     private ResourceBundle env;
     private String claveSecreta="12345";
     
@@ -63,7 +66,7 @@ public class Controlador implements  DAOEmpleados{
      * @param tabla
      */
     @Override
-    public void eliminarFilaSeleccionada(JTable tabla) {
+    public void eliminarFilaSeleccionada(JTable tabla, ArrayList<Empleado> empleados) {
         // Obtener el modelo de datos de la tabla
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
         
@@ -84,7 +87,7 @@ public class Controlador implements  DAOEmpleados{
         
         // Eliminar la fila seleccionada del modelo de datos de la tabla
         modelo.removeRow(filaSeleccionada);
-        this.empleados.remove(filaSeleccionada);
+        empleados.remove(filaSeleccionada);
         
     }
 
@@ -127,19 +130,19 @@ public class Controlador implements  DAOEmpleados{
      * @param tabla
      */
     @Override
-    public void cargaAutomatica(String nombre, String apellido, String id, Long salario, String cargo, JTable tabla) {
+    public void cargaAutomatica(String nombre, String apellido, String id, Long salario, String cargo, JTable tabla, ArrayList<Empleado> empleados) {
          // Crear una lista de empleados
         
-        this.empleados.add(new Empleado(nombre, apellido, id,salario, cargo));
+        empleados.add(new Empleado(nombre, apellido, id,salario, cargo));
         
         // Crear el modelo de tabla con los nombres de las columnas
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Nombre");
-        model.addColumn("Apellido");
-        model.addColumn("ID");
-        model.addColumn("Salario");
-        model.addColumn("Cargo");
-
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+//        model.addColumn("Nombre");
+//        model.addColumn("Apellido");
+//        model.addColumn("ID");
+//        model.addColumn("Salario");
+//        model.addColumn("Cargo");
+        
         // Agregar los datos de los empleados al modelo de tabla
         for (Empleado empleado : empleados) {
             Object[] row = new Object[5];
