@@ -529,11 +529,11 @@ public class VistaMenuPrincipal extends javax.swing.JFrame {
          try {
         BufferedWriter writer = new BufferedWriter(new FileWriter("Datos.txt"));
 
-        // Escribir encabezados de columnas
-        for (int i = 0; i < tabla.getColumnCount(); i++) {
-            writer.write(tabla.getColumnName(i) + "\t");
-        }
-        writer.newLine();
+//        // Escribir encabezados de columnas
+//        for (int i = 0; i < tabla.getColumnCount(); i++) {
+//            writer.write(tabla.getColumnName(i) + "\t");
+//        }
+//        writer.newLine();
 
         // Escribir datos de la tabla
         for (int row = 0; row < tabla.getRowCount(); row++) {
